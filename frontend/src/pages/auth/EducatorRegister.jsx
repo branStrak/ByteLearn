@@ -95,12 +95,20 @@ const EducatorRegister = () => {
         }
       });
 
-      navigate('/verify-otp', { 
-        state: { 
-          email: formData.email,
-          otpToken: res.data.otpToken
-        } 
-      });
+      if (res.data.token) {
+        // Email was skipped — user is auto-verified, log in directly
+        localStorage.setItem('token', res.data.token);
+        localStorage.setItem('user', JSON.stringify(res.data));
+        navigate('/educator-status');
+      } else {
+        // Normal OTP flow
+        navigate('/verify-otp', { 
+          state: { 
+            email: formData.email,
+            otpToken: res.data.otpToken
+          } 
+        });
+      }
     } catch (err) {
       setError(err.response?.data?.message || 'Registration failed');
     } finally {

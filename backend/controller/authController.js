@@ -64,16 +64,27 @@ const registerStudent = async (req, res) => {
                 subject: 'Verify your ByteLearn Account',
                 message: `Your OTP is ${otp}. It will expire in 10 minutes.`
             });
+            res.status(201).json({ 
+                message: 'Registration successful. Please verify OTP sent to email.',
+                otpToken 
+            });
         } catch (err) {
-            //delete user if email fails so they can try again
-            await User.findByIdAndDelete(user._id);
-            return res.status(500).json({ message: 'Failed to send OTP email. Please try again.' });
+            // Email failed — auto-verify and return token so user isn't blocked
+            console.error('OTP email failed, auto-verifying user:', err.message);
+            user.isVerified = true;
+            user.lastLogin = Date.now();
+            await user.save();
+            res.status(201).json({
+                _id: user.id,
+                name: user.name,
+                email: user.email,
+                role: user.role,
+                isVerified: true,
+                profilePicture: user.profilePicture,
+                token: generateToken(user._id),
+                message: 'Registration successful. Email verification skipped.'
+            });
         }
-
-        res.status(201).json({ 
-            message: 'Registration successful. Please verify OTP sent to email.',
-            otpToken 
-        });
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
@@ -143,16 +154,28 @@ const registerEducator = async (req, res) => {
                 subject: 'Verify your ByteLearn Educator Account',
                 message: `Your OTP is ${otp}. It will expire in 10 minutes.`
             });
+            res.status(201).json({ 
+                message: 'Registration successful. Please verify OTP sent to email.',
+                otpToken
+            });
         } catch (err) {
-            //delete user if email fails so they can try again
-            await User.findByIdAndDelete(user._id);
-            return res.status(500).json({ message: 'Failed to send OTP email. Please try again.' });
+            // Email failed — auto-verify and return token so user isn't blocked
+            console.error('OTP email failed, auto-verifying educator:', err.message);
+            user.isVerified = true;
+            user.lastLogin = Date.now();
+            await user.save();
+            res.status(201).json({
+                _id: user.id,
+                name: user.name,
+                email: user.email,
+                role: user.role,
+                isVerified: true,
+                profilePicture: user.profilePicture,
+                educatorApplication: user.educatorApplication,
+                token: generateToken(user._id),
+                message: 'Registration successful. Email verification skipped.'
+            });
         }
-
-        res.status(201).json({ 
-            message: 'Registration successful. Please verify OTP sent to email.',
-            otpToken
-        });
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
@@ -179,14 +202,17 @@ const loginUser = async (req, res) => {
                         subject: 'Verify your ByteLearn Account',
                         message: `Your new OTP is ${otp}. It will expire in 10 minutes.`
                     });
+                    return res.status(403).json({ 
+                        message: 'Account not verified. A new OTP has been sent to your email.',
+                        otpToken 
+                    });
                 } catch (err) {
-                    console.error('Failed to send OTP email on login attempt:', err.message);
+                    // Email failed — auto-verify and let user in
+                    console.error('OTP email failed on login, auto-verifying:', err.message);
+                    user.isVerified = true;
+                    user.lastLogin = Date.now();
+                    await user.save();
                 }
-
-                return res.status(403).json({ 
-                    message: 'Account not verified. A new OTP has been sent to your email.',
-                    otpToken 
-                });
             }
             if (user.isBlocked) {
                 return res.status(403).json({ message: 'Your account has been blocked. To request an unblock appeal, contact support@bytelearn.com' });
