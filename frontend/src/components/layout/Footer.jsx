@@ -95,9 +95,9 @@ const Footer = () => {
         <div>
           <h3 className="text-white font-bold mb-3 text-sm uppercase tracking-widest">Support</h3>
           <ul className="space-y-2 text-sm font-medium">
-            <li><Link to="#" className="text-blue-50 hover:text-white transition-colors">Documentation</Link></li>
-            <li><Link to="#" className="text-blue-50 hover:text-white transition-colors">Contact Support</Link></li>
-            <li><Link to="#" className="text-blue-50 hover:text-white transition-colors">Help Center</Link></li>
+            <li><Link to="/#documentation" className="text-blue-50 hover:text-white transition-colors">Documentation</Link></li>
+            <li><a href="mailto:support@bytelearn.com" className="text-blue-50 hover:text-white transition-colors">Contact Support</a></li>
+            <li><Link to="/#help" className="text-blue-50 hover:text-white transition-colors">Help Center</Link></li>
           </ul>
         </div>
 
@@ -105,8 +105,8 @@ const Footer = () => {
         <div>
           <h3 className="text-white font-bold mb-3 text-sm uppercase tracking-widest">Legal</h3>
           <ul className="space-y-2 text-sm font-medium">
-            <li><Link to="#" className="text-blue-50 hover:text-white transition-colors">Privacy Policy</Link></li>
-            <li><Link to="#" className="text-blue-50 hover:text-white transition-colors">Terms of Service</Link></li>
+            <li><Link to="/#privacy" className="text-blue-50 hover:text-white transition-colors">Privacy Policy</Link></li>
+            <li><Link to="/#terms" className="text-blue-50 hover:text-white transition-colors">Terms of Service</Link></li>
           </ul>
         </div>
       </div>
