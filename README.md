@@ -2,7 +2,7 @@
 
 ByteLearn is a high-performance, full-stack Learning Management System (LMS) engineered to bridge the gap between students, educators, and administrators. Built with a focus on data integrity, professional aesthetics, and automated pedagogy, the platform features atomic financial transactions, AI-assisted mentorship, and a headless-browser graduation engine.
 
-**🌐 Live Platform:** [bytelearn.arthapulse.app](https://byte-learn-rust.vercel.app/)
+**🌐 Live Platform:** [bytelearn.app](https://byte-learn-rust.vercel.app/)
 
 ---
 
@@ -162,7 +162,7 @@ ByteLearn is architected for cloud-native deployment.
 The React application is optimized for **Vercel**, leveraging its global Edge Network for ultra-fast load times.
 
 - **Platform**: [Vercel](https://vercel.com)
-- **Deployment URL**: [bytelearn.arthapulse.app](https://byte-learn-rust.vercel.app/)
+- **Deployment URL**: [bytelearn.app](https://byte-learn-rust.vercel.app/)
 
 ### **Backend (Render)**
 
@@ -175,5 +175,5 @@ The Node.js/Express server is hosted on **Render**, providing automated deployme
 
 ## 📧 Contact & Support
 
-For collaboration or technical support, please reach out via the official platform at [bytelearn.arthapulse.app](https://byte-learn-rust.vercel.app/).
+For collaboration or technical support, please reach out via the official platform at [bytelearn.app](https://byte-learn-rust.vercel.app/).
 
